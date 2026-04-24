@@ -1,7 +1,6 @@
 import { Look } from '../types';
-import ProductCard from './ProductCard';
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 interface LookCardProps {
   look: Look;
@@ -9,45 +8,50 @@ interface LookCardProps {
   key?: string | number;
 }
 
-export default function LookCard({ look, compact = false }: LookCardProps) {
+export default function LookCard({ look }: LookCardProps) {
+  const pinterestUrl = look.pinterestUrl || `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(look.title + ' dog owner matching outfit style')}`;
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      className="flex flex-col space-y-6"
+      className="break-inside-avoid mb-6 flex flex-col group"
     >
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl group">
+      <div className="relative overflow-hidden rounded-[24px] cursor-pointer">
         <img
           src={look.imageUrl}
           alt={look.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-          <h3 className="text-white text-3xl font-serif mb-2">{look.title}</h3>
-          <p className="text-white/80 text-sm mb-4 max-w-xs">{look.description}</p>
-          <button className="flex items-center space-x-2 text-white text-sm font-medium uppercase tracking-widest group/btn">
-            <span>Voir le look</span>
-            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-          </button>
+        
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex flex-col justify-between p-4">
+          <div className="flex justify-end">
+            <button className="bg-accent text-white px-5 py-2.5 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-all hover:scale-105 active:scale-95 shadow-lg">
+              Enregistrer
+            </button>
+          </div>
+          
+          <div className="flex justify-start">
+            <a 
+              href={pinterestUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white/90 hover:bg-white text-ink px-3 py-2 rounded-full text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 shadow-md transform translate-y-2 group-hover:translate-y-0"
+            >
+              <ExternalLink className="w-3 h-3" />
+              Pinterest
+            </a>
+          </div>
         </div>
       </div>
 
-      <div className="space-y-4">
-        {!compact && (
-          <div className="flex items-center justify-between">
-            <h3 className="text-xl font-serif">{look.title}</h3>
-            <span className="text-[10px] uppercase tracking-widest bg-pink-pale px-2 py-1 rounded-full">
-              {look.style}
-            </span>
-          </div>
-        )}
-        <div className="grid grid-cols-3 gap-3">
-          {look.products.slice(0, 3).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+      <div className="mt-3 px-1">
+        <h3 className="text-sm font-bold text-ink truncate">{look.title}</h3>
+        <p className="text-[11px] text-ink/50 line-clamp-1">{look.description}</p>
       </div>
     </motion.div>
   );

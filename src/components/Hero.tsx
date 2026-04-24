@@ -1,6 +1,4 @@
 import { motion } from 'motion/react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -30,21 +28,6 @@ export default function Hero() {
               Match ton style. <br />
               <span className="italic">Sublime</span> ton chien.
             </h1>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                to="/my-outfit"
-                className="inline-flex items-center justify-center px-8 py-4 bg-accent text-white text-sm font-medium uppercase tracking-widest hover:bg-accent/90 transition-all rounded-full group"
-              >
-                Trouver mon match
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                to="/category/small"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium uppercase tracking-widest hover:bg-white/20 transition-all rounded-full"
-              >
-                Explorer les looks
-              </Link>
-            </div>
           </motion.div>
         </div>
       </div>
