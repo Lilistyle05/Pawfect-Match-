@@ -8,6 +8,7 @@ export interface Product {
   name: string;
   brand: string;
   price: number;
+  originalPrice?: number;
   imageUrl: string;
   buyUrl: string;
 }

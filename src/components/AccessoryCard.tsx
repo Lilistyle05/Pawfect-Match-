@@ -24,6 +24,14 @@ export default function AccessoryCard({ accessory, onDetails }: AccessoryCardPro
           className="w-full object-cover group-hover:scale-105 transition-transform duration-500"
           referrerPolicy="no-referrer"
         />
+
+        {accessory.originalPrice && (
+          <div className="absolute top-4 left-4 z-10">
+            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-lg">
+              Promotion
+            </span>
+          </div>
+        )}
         
         {/* Hover Overlay */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex flex-col justify-between p-4">
@@ -54,7 +62,14 @@ export default function AccessoryCard({ accessory, onDetails }: AccessoryCardPro
       <div className="mt-3 px-2">
         <div className="flex justify-between items-baseline mb-1">
           <h3 className="text-sm font-serif font-bold text-ink italic">{accessory.name}</h3>
-          <span className="text-xs font-medium text-ink/70">{accessory.price}€</span>
+          <div className="flex items-center gap-2">
+            {accessory.originalPrice && (
+              <span className="text-[10px] text-ink/30 line-through">{accessory.originalPrice}€</span>
+            )}
+            <span className={`text-xs font-medium ${accessory.originalPrice ? 'text-red-500 font-bold' : 'text-ink/70'}`}>
+              {accessory.price}€
+            </span>
+          </div>
         </div>
         <p className="text-[11px] text-ink/50 line-clamp-1">{accessory.description}</p>
         <p className="text-[10px] uppercase tracking-[0.2em] text-accent font-bold mt-2">{accessory.brand}</p>

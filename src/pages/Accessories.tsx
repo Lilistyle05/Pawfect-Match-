@@ -28,6 +28,8 @@ export default function Accessories() {
     acc.brand.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const saleAccessories = ACCESSORIES.filter(acc => acc.originalPrice);
+
   return (
     <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <AccessoryModal 
@@ -48,6 +50,36 @@ export default function Accessories() {
           Complétez votre look avec notre sélection de laisses, lits, jouets et plus encore.
         </p>
       </motion.div>
+
+      {/* Promotions Section */}
+      {!searchQuery && saleAccessories.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-20"
+        >
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-2xl font-serif font-bold italic text-ink">Promotions</h2>
+              <p className="text-sm text-ink/50">Nos meilleures offres du moment pour votre compagnon.</p>
+            </div>
+            <div className="h-px flex-grow mx-8 bg-black/5 hidden md:block" />
+            <span className="bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest hidden sm:block">
+              Ventes Flash
+            </span>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {saleAccessories.map((accessory) => (
+              <AccessoryCard 
+                key={`sale-${accessory.id}`} 
+                accessory={accessory} 
+                onDetails={setSelectedAccessory}
+              />
+            ))}
+          </div>
+        </motion.div>
+      )}
 
       {/* Search Bar */}
       <div className="flex items-center space-x-4 mb-12 relative">

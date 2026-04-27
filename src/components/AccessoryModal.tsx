@@ -71,9 +71,21 @@ export default function AccessoryModal({ accessory, onClose }: AccessoryModalPro
                 <h2 className="text-2xl font-serif font-bold italic text-ink">{accessory.name}</h2>
             </div>
 
-            <p className="text-3xl font-medium text-ink mb-8">
-              {accessory.price}€
-            </p>
+            <div className="flex items-center gap-4 mb-8">
+              <span className={`text-3xl font-medium ${accessory.originalPrice ? 'text-red-500' : 'text-ink'}`}>
+                {accessory.price}€
+              </span>
+              {accessory.originalPrice && (
+                <>
+                  <span className="text-xl text-ink/30 line-through">
+                    {accessory.originalPrice}€
+                  </span>
+                  <span className="bg-red-500/10 text-red-500 px-3 py-1 rounded-lg text-xs font-bold uppercase">
+                    -{Math.round((1 - accessory.price / accessory.originalPrice) * 100)}%
+                  </span>
+                </>
+              )}
+            </div>
 
             <div className="space-y-6 mb-10">
               <div>
